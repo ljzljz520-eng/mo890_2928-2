@@ -98,9 +98,16 @@ func (s *Store) ImportBatch(items []ImportItem) ImportResult {
 	for _, item := range items {
 		submission, err := s.processItemLocked(batchID, item)
 		if err != nil {
+			record.Errors = append(record.Errors, BatchError{
+				ExternalID: item.ExternalID,
+				Message:    err.Error(),
+			})
 			continue
 		}
 		record.SubmissionIDs = append(record.SubmissionIDs, submission.ID)
+	}
+	if len(record.Errors) > 0 {
+		record.Status = BatchFailed
 	}
 	s.batches[batchID] = record
 	return ImportResult{Batch: cloneBatch(*record)}
