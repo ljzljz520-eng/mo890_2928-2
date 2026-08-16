@@ -96,8 +96,11 @@ func (s *Store) ImportBatch(items []ImportItem) ImportResult {
 	s.nextBatch++
 	record := &Batch{ID: batchID, Status: BatchCompleted, SubmissionIDs: []string{}, Errors: []BatchError{}}
 	for _, item := range items {
+		externalID := strings.TrimSpace(item.ExternalID)
 		submission, err := s.processItemLocked(batchID, item)
 		if err != nil {
+			record.Errors = append(record.Errors, BatchError{ExternalID: externalID, Message: err.Error()})
+			record.Status = BatchFailed
 			continue
 		}
 		record.SubmissionIDs = append(record.SubmissionIDs, submission.ID)
