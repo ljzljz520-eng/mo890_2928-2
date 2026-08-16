@@ -1,0 +1,46 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>社区长者记忆墙</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <header class="topbar">
+    <div>
+      <p class="eyebrow"> COMMUNITY MEMORY WALL </p>
+      <h1>社区长者记忆墙</h1>
+    </div>
+    <a class="export" href="/api/export">导出整站资料</a>
+  </header>
+  <main>
+    <section class="intro">
+      <div>
+        <span class="section-label">公开记忆</span>
+        <h2>把熟悉的故事，留在社区里</h2>
+        <p>浏览已公开的长者资料，也可以从下方提交一段新的记忆，交由工作人员审核。</p>
+      </div>
+      <div class="count" aria-label="公开长者数量"><strong id="elder-count">-</strong><span>位长者</span></div>
+    </section>
+    <section id="elders" class="elder-grid" aria-live="polite"></section>
+    <section class="submit-section">
+      <div>
+        <span class="section-label">家属投稿</span>
+        <h2>提交一段待审核的记忆</h2>
+        <p>提交后会先进入后台待审列表，审核通过才会展示在长者资料中。</p>
+      </div>
+      <form id="submission-form">
+        <label>长者<select id="elder-id" required></select></label>
+        <label>内容类型<select id="kind" required><option value="story">故事</option><option value="photo">照片</option><option value="year">重要年份</option><option value="message">家属寄语</option></select></label>
+        <label>标题<input id="title" required placeholder="例如：第一次远行"></label>
+        <label>内容<textarea id="content" required rows="3" placeholder="写下想保存的记忆"></textarea></label>
+        <label>署名<input id="author" placeholder="例如：女儿 林晓"></label>
+        <button type="submit">提交待审</button>
+        <p id="form-status" role="status"></p>
+      </form>
+    </section>
+  </main>
+  <script type="module" src="app.js"></script>
+</body>
+</html>
